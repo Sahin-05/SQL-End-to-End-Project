@@ -182,6 +182,8 @@ WHERE ood.order_status = 'delivered'
 GROUP BY date_trunc('month', ood.order_purchase_timestamp)
 ORDER BY months;
 
+Değerlendirme: Aylık gelirler 2016’dan 2018’e doğru giderek artmakta ve en çok gelir elde edilen aylar 2018’in Ocak-Mayıs aylarında yoğunlaşmaktadır.
+	
 -- 2.Soru: En çok satılan 10 ürün kategorisini bulun.  
 
 SELECT 
@@ -198,6 +200,8 @@ GROUP BY opd.product_category_name
 ORDER BY COUNT(ooid.order_item_id) DESC
 LIMIT 10;
 
+Değerlendirme: En çok satılan 10 ürün kategorisinden ilkinin “cama_mesa_banho”, sonuncusunun “automotivo” olduğu görülmektedir.
+	
 /* 3.Soru:   Müşterileri toplam harcamalarına göre segmentlere ayırın (>1000 BRL = Premium, 500-1000 
 BRL = Regular, <500 BRL = Low) */
 
@@ -219,6 +223,8 @@ ON ooid.order_id = ood.order_id
 WHERE ood.order_status = 'delivered'
 GROUP BY ocd.customer_state, customer_unique_id; 
 
+Değerlendirme: Müşterilerin yarıdan fazlası “Low”, sonra en fazla “Premium” ve en az da “Regular” segmentinde bulunmaktadır.
+	
 -- 4.Soru: Her ürün kategorisi için ortalama sipariş değerini (AOV) hesaplayın.
 
 SELECT 
@@ -236,6 +242,9 @@ ON ooid.product_id = opd.product_id
 WHERE ood.order_status = 'delivered'
 GROUP BY opd.product_category_name
 ORDER BY average_order_value DESC;
+
+Değerlendirme: En yüksek ortalama sipariş değerine sahip ürün kategorisi “pcs”, en düşük değere sahip ürün “casa_conforto_2”. 
+Ayrıca datasetinde kategorisi bilinmeyen (unknown) ürünlerin ortalama sipariş değeri 245.30’dur. 
 
 -- 5.Soru: Tekrar alım yapan müşterilerin sayısını ve toplam satışlara katkısını (%) hesaplayın.  
 
@@ -260,6 +269,8 @@ SELECT
     SUM(total_spent) FILTER (WHERE order_count > 1)::numeric / SUM(total_spent) * 100 AS revenue_contribution_percent
 FROM customer_summary;
 
+Değerlendirme: 2801 müşteri (toplam müşterilerin yaklaşık % 3’ü) tekrar alım yapmış ve toplam satışlara katkısı yaklaşıl % 5,5 olmuştur. 
+	
 -- 6.Soru: En yüksek gelir getiren 10 eyaleti bulun. 
 
 SELECT 
@@ -275,6 +286,8 @@ WHERE ood.order_status = 'delivered'
 GROUP BY ocd.customer_state
 ORDER BY total_sales DESC
 LIMIT 10;
+
+Değerlendirme: En yüksek gelir getiren 10 eyaletin birincisinin “SP”, onuncusunun “GO” olduğu görülmektedir.
 
 -- 7.Soru: Kategori bazında ortalama teslimat süresini (gün cinsinden) hesaplayın.  
 
@@ -293,6 +306,9 @@ ON ooid.product_id = opd.product_id
 WHERE ood.order_status = 'delivered' AND ood.order_delivered_customer_date IS NOT NULL
 GROUP BY opd.product_category_name;
 ORDER BY average_delivery_days;
+
+Değerlendirme: En hızlı teslim edilen ürün kategorisinin “artes_e_artesanato” (ortalama 5,29 gün), 
+en uzun teslimat süresine sahip ürün kategorisinin “moveis_escritorio” (ortalama 20,39 gün) olduğu görülmektedir. 
 
 -- 8. Soru: En yüksek iade oranına sahip ürün kategorilerini bulun.
 
@@ -319,6 +335,9 @@ ON ooid.product_id = opd.product_id
 GROUP BY opd.product_category_name
 ORDER BY returned_rate_percent DESC;
 
+Değerlendirme: “pc_gamer” ütün kategorisi toplam 9 siparişte 1 olmak üzere % 11,11 oranı ile en yüksek iade oranına sahiptir. 
+İade sayıları açısından değerlendirildiğinde en fazla geri iade edilen ürün “esperto_lazer” (51 kez)’dir. 
+14 kez geri iade edilen ürünlerin ürün kategorileri bilinmemektedir (unknown).
 
 -- 9. Soru: En yüksek satış yapan 10 satıcıyı ve kategorilerini bulun.  
 
@@ -341,6 +360,10 @@ GROUP BY ooid.seller_id, opd.product_category_name
 ORDER BY total_sales DESC
 LIMIT 10;
 
+Değerlendirme: En yüksek satış değerine sahip ürün kategorisi “relegios_presentes”, en düşük değere sahip kategori “ferramentas_jardim”. 
+Ancak, en yüksek satış sayısına sahip ürün kategorisinin de “ferramentas_jardim” olduğu görülmektedir. 
+Bu açıdan bakıldığında “ferramentas_jardim” kategorisindeki ürünlerin diğer ürünlere göre uygun fiyatlı olduğu sonucuna varılabilir.
+	
 -- 10.Soru: Hafta içi ve hafta sonu sipariş sayılarını ve gelirlerini karşılaştırın.
 
 SELECT 
@@ -358,13 +381,17 @@ WHERE ood.order_status = 'delivered'
 GROUP BY day_type
 ORDER BY day_type;
 
+Değerlendirme: Ürünlerin yaklaşık %75’nin hafta içi sipariş verildiği görülmektedir. Hafta içi sipariş verilen ürünlerin toplam geliri hafta sonu verilenlerin 3 katından fazladır. 
+Bununla birlikte, ortalama sipariş değerinin (teslim edilen her bir  sipariş için ortalama fiyat) hafta sonu siparişleri için çok az bir farkla yüksek olduğu görülmektedir.  
+
 -- 3: POSTGRESQL’DEN VERİ EXPORT ETME (DIŞA AKTARMA)
 
 /* 1, 3 ve 6'ncı sorgularda elde edilen analiz sonuçları csv formatında dışa aktarılmıştır.*/
 
 -- 4: SONUÇLARIN GÖRSELLEŞTİRİLMESİ VE RAPORLAMA 
 
-/* Dışa aktarılan tablolar Tableau programında görselleştirilmiştir.
+/* Dışa aktarılan tablolar Tableau programında görselleştirilmiştir.*/
+
 
 
 
