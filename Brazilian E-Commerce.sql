@@ -360,11 +360,12 @@ ORDER BY day_type;
 
 -- 3: POSTGRESQL’DEN VERİ EXPORT ETME (DIŞA AKTARMA)
 
-/* 1, 3, 6 ve 10'uncu sorgularda elde edilen analiz sonuçları csv formatında dışa aktarılmıştır.*/
+/* 1, 3 ve 6'ncı sorgularda elde edilen analiz sonuçları csv formatında dışa aktarılmıştır.*/
 
 -- 4: SONUÇLARIN GÖRSELLEŞTİRİLMESİ VE RAPORLAMA 
 
 /* Dışa aktarılan tablolar Tableau programında görselleştirilmiştir.
+
 
 
 
