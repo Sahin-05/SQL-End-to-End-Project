@@ -269,7 +269,7 @@ SELECT
     SUM(total_spent) FILTER (WHERE order_count > 1)::numeric / SUM(total_spent) * 100 AS revenue_contribution_percent
 FROM customer_summary;
 
-Değerlendirme: 2801 müşteri (toplam müşterilerin yaklaşık % 3’ü) tekrar alım yapmış ve toplam satışlara katkısı yaklaşıl % 5,5 olmuştur. 
+Değerlendirme: 2801 müşteri (toplam müşterilerin yaklaşık % 3’ü) tekrar alım yapmış ve toplam satışlara katkısı yaklaşık % 5,5 olmuştur. 
 	
 -- 6.Soru: En yüksek gelir getiren 10 eyaleti bulun. 
 
@@ -391,6 +391,7 @@ Bununla birlikte, ortalama sipariş değerinin (teslim edilen her bir  sipariş 
 -- 4: SONUÇLARIN GÖRSELLEŞTİRİLMESİ VE RAPORLAMA 
 
 /* Dışa aktarılan tablolar Tableau programında görselleştirilmiştir.*/
+
 
 
 
