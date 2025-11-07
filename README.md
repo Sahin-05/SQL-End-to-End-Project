@@ -363,5 +363,6 @@ o Veri türü dönüşümü: “Year” sütununun veri tipi BIGINT’ten DATE v
 
 ### 7. Sonuçların Raporlanması ve Proje Sunumu:
 • Proje sonunda elde edilen SQL sorguları ve analiz sonuçları Jupyter Notebook üzerinden oluşturulmuş ve aşağıda linki belirtilen GitHub reposunda yayınlanmıştır. 
+
 Sahin-05/SQL-End-to-End-Project: SQL Project Files
 
