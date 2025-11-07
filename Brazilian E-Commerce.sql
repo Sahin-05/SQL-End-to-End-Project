@@ -234,7 +234,8 @@ ON ooid.order_id = ood.order_id
 JOIN olist_products_dataset opd
 ON ooid.product_id = opd.product_id
 WHERE ood.order_status = 'delivered'
-GROUP BY opd.product_category_name;
+GROUP BY opd.product_category_name
+ORDER BY average_order_value DESC;
 
 -- 5.Soru: Tekrar alım yapan müşterilerin sayısını ve toplam satışlara katkısını (%) hesaplayın.  
 
@@ -291,6 +292,7 @@ JOIN olist_products_dataset opd
 ON ooid.product_id = opd.product_id
 WHERE ood.order_status = 'delivered' AND ood.order_delivered_customer_date IS NOT NULL
 GROUP BY opd.product_category_name;
+ORDER BY average_delivery_days;
 
 -- 8. Soru: En yüksek iade oranına sahip ürün kategorilerini bulun.
 
@@ -363,6 +365,7 @@ ORDER BY day_type;
 -- 4: SONUÇLARIN GÖRSELLEŞTİRİLMESİ VE RAPORLAMA 
 
 /* Dışa aktarılan tablolar Tableau programında görselleştirilmiştir.
+
 
 
 
