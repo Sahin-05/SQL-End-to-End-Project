@@ -1,6 +1,6 @@
 ______________________________________
 # SQL End-to-End Proje Raporu
-Ad Soyad: [Şahin Cıplak]
+Ad Soyad: Şahin Cıplak
 GitHub Reposu: Sahin-05/SQL-End-to-End-Project: SQL Project Files
 Tableau Public Linki (Proje 2 için): 
 https://public.tableau.com/app/profile/sahin.c./viz/Project2_Braziliane-commerce/Braziliane-commerce 
@@ -38,7 +38,7 @@ Bu dosya aşağıdaki komutları içermektedir:
 ### 3. Veri Doğrulama ve İlişki Kontrol Sorguları
 Oluşturulan tabloların ve aralarındaki ilişkilerin doğruluğunu kontrol etmek için temel SELECT ve JOIN sorguları kullanılmıştır.
 
--- customers, customers_address, products, categories, orders, order_address, orderitems ve payments tablolarındaki verileri kontrol etmek:
+-- customers, customers_address, products, categories, orders, order_address, orderitems ve payments tablolarındaki verileri kontrol edilmiştir:
 
 SELECT * FROM customers;
 SELECT * FROM customers_address;
@@ -49,7 +49,7 @@ SELECT * FROM order_address;
 SELECT * FROM orderitems;
 SELECT * FROM payments;
 
--- Tablolar arasındaki bire-bir, bire-çok ve çoka-çok ilişkileri kontrol etmek: 
+-- Tablolar arasındaki bire-bir, bire-çok ve çoka-çok ilişkileri kontrol edilmiştir: 
 
 SELECT *
 FROM customers c 
@@ -324,4 +324,44 @@ https://public.tableau.com/app/profile/sahin.c./viz/Project2_Braziliane-commerce
 ### 5. Proje Dosyaları (GitHub)
 Bu proje için kullanılan tüm dosyalar (SQL betikleri, dışa aktarılan veriler ve Tableau dosyası ) bu GitHub reposunda mevcuttur.
 
+## Proje 3: DuckDB Kütüphanesi üzerinden SQL Kullanımına Yönelik Capstone Proje
+Proje: Veri Temizleme ve İstatistiksel Analiz ile Veri Seti Hazırlama (DuckDB Kullanarak SQL Sorguları) 
+Veri Seti: Synthetic Car Sales Dataset Over Million Records
+
+### 1. Veri Setinin İndirilmesi ve Yüklenmesi: 
+• Synthetic Car Sales Dataset veri seti Kaggle'dan https://www.kaggle.com/datasets/jayavarman/synthetic-car-sales-dataset-over-million-records adresinden indirilmiştir. 
+• DuckDB ile CSV dosyası yüklenmiş ve veri seti bir DuckDB veritabanı içinde kullanılabilir hale getirilmiştir. 
+
+### 2. Veri İncelemesi ve İlk SQL Sorgusu:
+• Veri kümesi yapısını inceleme: DuckDB üzerinden DESCRIBE komutu ile veri kümesinin yapısı, feature adları ve veri türleri kontrol edilmiştir. 
+• İlk SQL sorgusu yazılarak ve SELECT komutu kullanılarak ilk 5 satır görülmüş, sütunlar ve veri türleri hakkında genel bir bilgi edinilmiştir. 
+
+### 3. Veri Temizliği ve Düzenlenmesi: 
+• Eksik veri tespiti: COUNT(*), WHERE, IS NULL gibi SQL sorguları ile eksik veya NULL değerler kontrol edilmiş ve eksik değer olmadığı görülmüştür. 
+• Hatalı ve tutarsız veri tespiti: SELECT * FROM table WHERE Year < 1900 OR Year > 2025 OR Price < 0 OR Mileage < 0 şeklindeki bir SQL sorgusu ile mantıksız veriler sorgulanmış, bulunmadığı tespit edilmiştir. 
+• Veri temizliği işlemleri: 
+o NULL değerlerini doldurma: Null değerde veri bulunmamakla birlikte, bulunması durumunda UPDATE komutu ile ortalama ve en sık tekrar eden verilerle nasıl doldurulacağı örnek SQL sorguları ile gösterilmiştir. 
+o Gereksiz sütunların silinmesi: ALTER TABLE, DROP COLUMN komutları ile “First Name”, Last Name” ve “Address” sütunları düşürülmüştür. 
+o Veri türü dönüşümü: “Year” sütununun veri tipi BIGINT’ten DATE veri tipine dönüştürülmüştür. 
+
+### 4. Temel İstatistiksel Analizler:
+• Temel istatistiksel ölçümler: SQL sorguları ile ortalama, medyan, maksimum, minimum gibi temel istatistiksel ölçümler yapmıştır. Bu kapsamda; AVG(Price), MAX(Price), MIN(Price), median_price, median_mileage, AX(Year), MIN(Year), En_Eski_Aracın_Yaşı ve En_Yeni_Aracın_Yaşı görülmüştür.
+• Gruplama ve kategorik analiz: Markaya göre ortalama, maximum ve minimum araç fiyatları; Modele göre ortalama, maximum ve minimum araç fiyatları; Color ve Condition durumlarına göre ortalama araç fiyatları, Ülkelere göre ortalama, maximum ve minimum araç fiyatları görülmüştür.
+
+### 5. Zaman Serisi ve Trend Analizleri:
+• Zaman Serisi ve Trend Analizi: Veri setinde “satış tarihi” veya benzeri bir zaman verisi bulunmadığından, araçların “üretim yılı” sütunu zaman serisi analizlerinde kullanılmıştır.  EXTRACT(YEAR FROM Year) ve GROUP BY Year komutları yardımıyla; 
+- Üretim yıllarına göre satılan araç sayısı durumu (Çıkarım: Özellikle 2020-12 yılları arasında üretilen araçların ortalama fiyatının diğer yıllara göre yüksek olduğu görülmektedir.), 
+- Üretim yıllarına göre satılan araç sayısı durumu (Çıkarım: Üretim yıllarına göre satılan araç sayısı durumunun birbirine yakın olduğu görülmektedir.),
+- Araçların üretim yıllarına göre toplam satış toplamlarının dağılımı (Çıkarım: Araçların yıllara göre satış toplamlarının dağılımının 1,7e+09 etrafında yoğunlaştığı görülmektedir.),
+- Araçların üretim yıllarına göre ortalama kilometre (mileage) değişimi (Çıkarım: Ortalama kilometre değişimlerinin 2018-2020 yıllarında en yüksek, 2021-2023 yılları arasında en düşük seviyede olduğu görülmektedir.),
+- Araçların üretim yıllarına ve “Condition” (örn. Yeni / İkinci El) durumuna göre en çok satılan 20 araç (Çıkarım: 2001, 2002,2003, 2011, 2015 ve 2020 yılı üretimli araçlarda iki farklı, diğerlerinde tek "condition"a sahip araçların çoğunlukla satıldığı görülmektedir.),
+- Araçların üretim yıllarına göre en çok araç satılan 20 ülke (Çıkarım: 2011 yılı üretimi araçların üç; 2001, 2005 ve 2015 yılı üretimi araçların iki, diğer yıl üretim araçların tek bir ülkede en fazla satıldığı görülmektedir.),
+- Üretim yıllarına göre en çok satılan ilk 3 marka araç (Çıkarım: Son 10 yılda Nissan, Subaru, Toyota, Volkswagen, Chevrolet, Chrysler ve Hyundai marka araçların daha fazla satıldığı) analizleri yapılmıştır.
+
+### 6. Veriyi Görselleştirme için SQL Sonuçlarını Çıkartma 
+• SQL yöntemleri ile yapılan zaman serisi ve trend analizi ile elde edilen DuckDB analiz sonuçları Pandas DataFrame’e aktarılmış, Matplotlib veya Seaborn kütüphaneleri kullanılarak çeşitli grafiklerle görselleştirilmiş ve çıkarımlar eklenmiştir. 
+
+### 7. Sonuçların Raporlanması ve Proje Sunumu:
+• Proje sonunda elde edilen SQL sorguları ve analiz sonuçları Jupyter Notebook üzerinden oluşturulmuş ve aşağıda linki belirtilen GitHub reposunda yayınlanmıştır. 
+Sahin-05/SQL-End-to-End-Project: SQL Project Files
 
