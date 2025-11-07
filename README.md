@@ -102,7 +102,7 @@ DBeaver'da bulunan database içerisinde "Brassilian E-Commerce" database'i oluş
 
 ### 2. SQL Sorguları ve Analizler (10 Sorgu)
 Veri seti üzerinde iş analitiği, müşteri segmentasyonu ve ürün performansı gibi konulara odaklanan 10 adet SQL sorgusu hazırlanmıştır.
-•	Proje 2 SQL Dosyası: https://github.com/Sahin-05/SQL-End-to-End-Project/blob/main/Brazilian%20E-Commerce.sql 
+•	Proje 2 SQL Dosyası: https://github.com/Sahin-05/SQL-End-to-End-Project/blob/main/Project-2_Brazilian%20E-Commerce.sql 
 
 #### Soru 1: Olist'in aylık toplam gelirini hesaplayın. 
 
