@@ -1,7 +1,7 @@
 ______________________________________
 # SQL End-to-End Proje Raporu
 Ad Soyad: Şahin Cıplak
-GitHub Reposu: Sahin-05/SQL-End-to-End-Project: SQL Project Files
+GitHub Reposu: https://github.com/Sahin-05/SQL-End-to-End-Project/tree/main
 Tableau Public Linki (Proje 2 için): 
 https://public.tableau.com/app/profile/sahin.c./viz/Project2_Braziliane-commerce/Braziliane-commerce 
 ________________________________________
@@ -364,5 +364,5 @@ o Veri türü dönüşümü: “Year” sütununun veri tipi BIGINT’ten DATE v
 ### 7. Sonuçların Raporlanması ve Proje Sunumu:
 • Proje sonunda elde edilen SQL sorguları ve analiz sonuçları Jupyter Notebook üzerinden oluşturulmuş ve aşağıda linki belirtilen GitHub reposunda yayınlanmıştır. 
 
-Sahin-05/SQL-End-to-End-Project: SQL Project Files
+https://github.com/Sahin-05/SQL-End-to-End-Project/tree/main
 
